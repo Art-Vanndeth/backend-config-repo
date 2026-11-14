@@ -1,0 +1,7 @@
+apiVersion: v2
+name: cstad-backend
+description: Helm chart for CSTAD DevOps Final Project Spring Boot 3 Backend API (Dynamic Environment Support)
+type: application
+version: 1.0.0
+appVersion: "v1.0.1"
+

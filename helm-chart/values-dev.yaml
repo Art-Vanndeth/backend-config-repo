@@ -1,0 +1,28 @@
+replicaCount: 1
+environment: dev
+
+service:
+  type: NodePort
+  nodePort: 31081
+
+config:
+  APP_ENV: "dev"
+  DB_HOST: "postgres-service"
+  DB_NAME: "cstad_devops"
+  CORS_ALLOWED_ORIGINS: "https://app-dev.devops.cstad.edu.kh,http://localhost:3000"
+
+ingress:
+  enabled: true
+  host: api-dev.devops.cstad.edu.kh
+  tlsSecretName: cstad-backend-dev-tls
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 192Mi
+  limits:
+    cpu: 400m
+    memory: 512Mi
+

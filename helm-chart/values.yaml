@@ -1,0 +1,47 @@
+replicaCount: 2
+
+environment: production
+
+image:
+  repository: docker.devops.cstad.edu.kh/cstad-backend
+  tag: "v1.0.1"
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: nexus-registry-secret
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+  nodePort: 30081
+
+config:
+  SERVER_PORT: "8080"
+  APP_ENV: "production"
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "cstad_devops"
+  CORS_ALLOWED_ORIGINS: "https://app.devops.cstad.edu.kh"
+
+secrets:
+  DB_USERNAME: "cstad_user"
+  DB_PASSWORD: "cstad_secret_pass_2026"
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  host: api.devops.cstad.edu.kh
+  tlsSecretName: cstad-backend-tls
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 800m
+    memory: 768Mi
+
